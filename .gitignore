@@ -1,1 +1,4 @@
 .ccls-cache
+.gitignore
+*.out
+*.c
