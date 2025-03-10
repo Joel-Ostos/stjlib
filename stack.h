@@ -19,8 +19,11 @@ struct Stack {
 #define stack_cast(x) ((Stack*) x - 1)
 #define stack_push(x, v) !(x) ?  x = stack_init(x, sizeof(*x)), stack_put(x, v) : stack_put(x,v) 
 #define stack_put(x, v) stack_check(stack_cast(x)) ? (x)[stack_cast(x)->used] = v, stack_cast(x)->used++ : (stack_grow(x, sizeof(x[0])), (x)[stack_cast(x)->used] = v, stack_cast(x)->used++)
-#define stack_pop(x)   !(x)  ? printf("Unitialized stack\n"): stack_delete(x) 
-#define stack_delete(x)  stack_cast(x)->used == 0 ? printf("Empty stack\n") : (stack_cast(x)->used--, (x)[stack_cast(x)->used])
+#define stack_pop(x)     !(x)  ? printf("Unitialized stack\n"): stack_delete(x) 
+#define stack_top(x)     stack_cast(x)->used == 0 ? :  (x)[stack_cast(x)->used-1]
+#define stack_delete(x)  stack_cast(x)->used == 0 ? : (stack_cast(x)->used--, (x)[stack_cast(x)->used])
+#define stack_size(x)  	 stack_cast(x)->used
+#define stack_empty(x)   !(x) ? true: stack_cast(x)->used == 0
 
 bool stack_check(Stack* x) 
 {
