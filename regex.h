@@ -29,7 +29,7 @@ enum op getop(char x)
 
 void reordenate_stack(char x, char** s, char** q) 
 {
-  if (*(s) == NULL || stack_size(*s) == 0) {
+  if ((stack_size(*s)) == 0) {
     stack_push(*s, x);
     return;
   }
@@ -43,9 +43,10 @@ void reordenate_stack(char x, char** s, char** q)
   }
 
   if (oper == CL_PAR) {
-    while (top != OP_PAR && stack_size(*s) != 0) {
-      queue_push(*q, stack_pop(*s));
-      char operand = stack_top(*s);
+    while (top != OP_PAR && (stack_size(*s)) > 0) {
+      char operand = stack_pop(*s);
+      queue_push(*q, operand);
+      operand = stack_top(*s);
       top = getop(operand);
     }
     if (top == OP_PAR) {
@@ -56,18 +57,19 @@ void reordenate_stack(char x, char** s, char** q)
     exit(1);
   }
 
-  while (oper >= top && stack_size(*s) != 0) {
+  while (oper >= top && (stack_size(*s)) > 0) {
     if (top == OP_PAR) {
       stack_push(*s, x);
       return;
     };
-    queue_push(*q, stack_pop(*s));
+    char n = stack_pop(*s);
+    queue_push(*q, n);
     top = getop(stack_top(*s));
   }
   stack_push(*s, x);
 }
 
-regex shunting_postfix(regex src) 
+regex shunting_postfix(const regex src) 
 {
   regex output = {0};
   char* opts = {0};
@@ -80,11 +82,13 @@ regex shunting_postfix(regex src)
   }
 
   while (!(queue_empty(characters))) {
-    da_append(output, queue_pop(characters));
+    char character = queue_pop(characters);
+    da_append(output, character);
   }
 
   while (!(stack_empty(opts))) {
-    da_append(output, stack_pop(opts));
+    char opt = stack_pop(opts);
+    da_append(output, opt);
   }
 
   return output;

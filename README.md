@@ -1,3 +1,5 @@
+[![es](https://img.shields.io/badge/lang-es-yellow.svg)](https://github.com/Joel-Ostos/stjlib/blob/main/README.es.md)
+
 <p align="center">
 <img src="img/stjlib.png" align="center" style="width: 150px; margin-right: 10px;">
 </p>
