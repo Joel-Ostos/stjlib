@@ -1,5 +1,4 @@
 .ccls-cache
 .gitignore
-examples/
 *.out
 *.c
